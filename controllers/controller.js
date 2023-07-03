@@ -1,6 +1,6 @@
 const resturantModel = require('../models/model')
 const validate = require("../Middleware/validate")
-const newResturant = async (req, res)=>{
+exports.newResturant = async (req, res)=>{
     try {
         const newRes = await resturantModel.create(req.body)
         res.status(200).json({
@@ -16,7 +16,7 @@ const newResturant = async (req, res)=>{
 
 
 
-const getResturant = async (req, res)=>{
+exports.getResturant = async (req, res)=>{
     try {
         const user = await resturantModel.findById(req.params.id)
         .populate("citizenMeal",["main","sides","drink"])
@@ -33,7 +33,7 @@ const getResturant = async (req, res)=>{
 }
 
 //update
-const updateMenu = async (req, res) => {
+exports.updateMenu = async (req, res) => {
     try {
       const menuId = req.params.id;
       const menu = await menu.findByIdAndUpdate(menuId, req.body, {
@@ -57,31 +57,12 @@ const updateMenu = async (req, res) => {
     }
   };
 
-const updateContact = async (req, res)=>{
-    try {
-        
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
-    }
-}
 
-
-const deleteContact = async (req, res)=>{
-    try {
-        
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
-    }
-}
 //delete
-const deleteMenu = async (req, res) => {
+exports.deleteMenu = async (req, res) => {
   try {
     const menuId = req.params.id;
-    const menu = await Menu.findByIdAndDelete(menuId);
+    const menu = await menuId.findByIdAndDelete(menuId);
     if (!menu) {
       res.status(400).json({
         messaage: "error",
@@ -116,9 +97,3 @@ const deleteMenu = async (req, res) => {
   }
  };
 
-module.exports = {
-    newResturant,
-    getResturant,
-    updateContact,
-    deleteContact
-}
